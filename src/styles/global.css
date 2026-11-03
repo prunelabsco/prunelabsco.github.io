@@ -12,7 +12,8 @@
   --paper: #fafaf8;
   --paper-line: #c9c9c4;
   --clay: #d2643a;
-  --clay-ink: #b04f2a;
+  --clay-ink: #b04f2a; /* clay dark enough for white text (AA) */
+  --clay-press: #963f20;
 
   --sans: "Geist Variable", system-ui, sans-serif;
   --mono: "Geist Mono Variable", ui-monospace, monospace;
