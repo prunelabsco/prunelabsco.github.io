@@ -1,0 +1,156 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const { title, summary, published, youtube, instagram } = article.data;
+const date = published.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<Base title={title} description={summary}>
+  <header class="wrap top">
+    <a class="back" href="/">Prune Labs</a>
+  </header>
+  <main class="wrap">
+    <article class="sheet paper">
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <p class="meta">
+        <time datetime={published.toISOString()}>{date}</time>
+        {youtube && <a href={youtube}>Watch on YouTube</a>}
+        {instagram && <a href={instagram}>Watch on Instagram</a>}
+      </p>
+      <div class="body"><Content /></div>
+    </article>
+  </main>
+</Base>
+
+<script>
+  // Copy button on every code block: the commands are the reason people open these pages.
+  document.querySelectorAll<HTMLPreElement>(".body pre").forEach((pre) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy";
+    button.textContent = "Copy";
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(pre.querySelector("code")?.innerText ?? pre.innerText);
+        button.textContent = "Copied";
+      } catch {
+        button.textContent = "Select and copy";
+      }
+      setTimeout(() => (button.textContent = "Copy"), 1600);
+    });
+    pre.append(button);
+  });
+</script>
+
+<style>
+  .top {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .back {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .back::before {
+    content: "← ";
+  }
+  .sheet {
+    max-width: 760px;
+    padding: clamp(24px, 5vw, 56px);
+  }
+  h1 {
+    margin: 0 0 16px;
+    font-size: clamp(34px, 5.4vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .summary {
+    margin: 0 0 20px;
+    font-size: clamp(19px, 2.2vw, 22px);
+    line-height: 1.45;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 0 0 36px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .meta a {
+    color: var(--ink);
+  }
+  .body :global(h2) {
+    margin: 44px 0 10px;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .body :global(p),
+  .body :global(li) {
+    max-width: 64ch;
+  }
+  .body :global(li + li) {
+    margin-top: 6px;
+  }
+  .body :global(a) {
+    text-decoration-color: var(--clay);
+    text-underline-offset: 3px;
+  }
+  .body :global(:not(pre) > code) {
+    font-size: 0.88em;
+    background: var(--grid-minor);
+    padding: 1px 5px;
+  }
+  .body :global(pre) {
+    position: relative;
+    margin: 18px 0;
+    padding: 18px 18px 18px;
+    padding-right: 86px;
+    background: var(--ink) !important;
+    color: #f4f4f2;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .body :global(pre code) {
+    background: none;
+  }
+  .body :global(.copy) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    border: 0;
+    background: #2b2b29;
+    color: #f4f4f2;
+    font: 600 13px/1 var(--sans);
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-out), transform 120ms var(--ease-out);
+  }
+  .body :global(.copy:hover) {
+    background: var(--clay);
+  }
+  .body :global(.copy:active) {
+    transform: scale(0.96);
+  }
+  .body :global(blockquote) {
+    margin: 24px 0;
+    padding: 4px 0 4px 18px;
+    border-left: 4px solid var(--clay);
+    font-weight: 600;
+  }
+</style>
