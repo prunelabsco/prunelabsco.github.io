@@ -1,0 +1,222 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { site } from "../site";
+
+const articles = (await getCollection("articles")).sort(
+  (a, b) => b.data.published.getTime() - a.data.published.getTime(),
+);
+---
+
+<Base>
+  <main class="wrap hub">
+    <header class="intro">
+      <h1>Prune Labs</h1>
+      <p class="lede">
+        I test developer and AI tools on real projects, then keep only what works. The notes, setups and links from
+        every video live here.
+      </p>
+      <p class="socials">
+        <a href={site.youtube}>YouTube</a>
+        <a href={site.instagram}>Instagram</a>
+        <a href={site.github}>GitHub</a>
+      </p>
+    </header>
+
+    <div class="cuts">
+      <section aria-labelledby="prism">
+        <a class="strip keep" href="/prism/">
+          <h2 id="prism">Prism</h2>
+          <span>The tool that watched my 147 saved reels for me. Join the waitlist.</span>
+        </a>
+      </section>
+
+      <section aria-labelledby="read">
+        <h2 id="read" class="label">Read</h2>
+        <ul class="list">
+          {
+            articles.map((article) => (
+              <li>
+                <a class="strip paper" href={`/a/${article.id}/`}>
+                  <strong>{article.data.title}</strong>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="watch">
+        <h2 id="watch" class="label">Watch</h2>
+        <ul class="list">
+          <li>
+            <a class="strip paper" href="https://www.youtube.com/watch?v=yAjMdsWBL_g">
+              <strong>One Plugin Stopped Claude From Coding 7 Out of 9 Times</strong>
+              <span>Latest test · 6 min</span>
+            </a>
+          </li>
+          <li>
+            <a class="strip paper" href="https://www.youtube.com/watch?v=iGF4tP7DhZE">
+              <strong>I Tested 3 CLAUDE.md Setups 9 Times</strong>
+              <span>Test · 7 min</span>
+            </a>
+          </li>
+          <li>
+            <a class="strip paper" href={site.youtube}>
+              <strong>All videos on YouTube</strong>
+              <span>@prunelabsco</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      {
+        site.kofi && (
+          <section aria-labelledby="support">
+            <h2 id="support" class="label">Support</h2>
+            <a class="strip paper" href={site.kofi}>
+              <strong>Buy me a coffee on Ko-fi</strong>
+              <span>Keeps the tests running</span>
+            </a>
+          </section>
+        )
+      }
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hub {
+    display: grid;
+    gap: 48px;
+    padding-top: clamp(40px, 8vw, 96px);
+  }
+  @media (min-width: 900px) {
+    .hub {
+      grid-template-columns: 5fr 7fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .intro {
+      position: sticky;
+      top: 64px;
+    }
+  }
+  h1 {
+    margin: 0 0 20px;
+    font-size: clamp(56px, 9vw, 120px);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-weight: 750;
+  }
+  .lede {
+    max-width: 30ch;
+    margin: 0 0 24px;
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.4;
+  }
+  .socials {
+    display: flex;
+    gap: 22px;
+    margin: 0;
+    font-weight: 600;
+  }
+  .socials a {
+    text-underline-offset: 4px;
+  }
+  .socials a:hover {
+    text-decoration-color: var(--clay);
+  }
+
+  .cuts {
+    display: grid;
+    gap: 40px;
+  }
+  .label {
+    margin: 0 0 12px;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* a strip of paper cut from the mat */
+  .strip {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 18px 20px;
+    min-height: 60px;
+    text-decoration: none;
+    transition:
+      transform 220ms var(--ease-out),
+      border-color 220ms var(--ease-out);
+  }
+  .strip strong {
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .strip span {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .strip.paper:hover {
+    border-color: var(--ink);
+  }
+  @media (hover: hover) {
+    .strip:hover {
+      transform: translateX(6px);
+    }
+  }
+  .strip:active {
+    transform: scale(0.99);
+  }
+
+  /* the one thing worth keeping: the only clay on the page */
+  .keep {
+    background: var(--clay-ink);
+    color: #fff;
+    padding: 26px 24px;
+  }
+  .keep h2 {
+    margin: 0 0 4px;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .keep span {
+    color: #fff;
+    font-size: 18px;
+    max-width: 36ch;
+  }
+  .keep:hover {
+    background: var(--clay-press);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cuts > section {
+      animation: rise 520ms var(--ease-out) both;
+    }
+    .cuts > section:nth-child(2) {
+      animation-delay: 70ms;
+    }
+    .cuts > section:nth-child(3) {
+      animation-delay: 140ms;
+    }
+    .cuts > section:nth-child(4) {
+      animation-delay: 210ms;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+</style>

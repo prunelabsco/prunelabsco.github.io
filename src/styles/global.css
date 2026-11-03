@@ -1,0 +1,89 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* Prune Labs palette (same as the video engine, _engine/src/theme.ts):
+   white cutting mat, charcoal ink, clay only for the one thing worth keeping */
+:root {
+  --bg: #ffffff;
+  --grid-minor: #eeeeec;
+  --grid-major: #dfdfdb;
+  --ink: #151515;
+  --muted: #5e5e5a;
+  --paper: #fafaf8;
+  --paper-line: #c9c9c4;
+  --clay: #d2643a;
+  --clay-ink: #b04f2a; /* clay dark enough for white text (AA) */
+  --clay-press: #963f20;
+
+  --sans: "Geist Variable", system-ui, sans-serif;
+  --mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  --gutter: clamp(16px, 4vw, 32px);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  /* the cutting mat: same grid as the videos */
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: var(--ink);
+  font: 500 17px/1.55 var(--sans);
+  font-feature-settings: "tnum" 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--clay);
+  color: #fff;
+}
+
+/* a piece of paper on the mat, edged by its cut line */
+.paper {
+  background: var(--paper);
+  border: 1.5px dashed var(--paper-line);
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+pre,
+code {
+  font-family: var(--mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

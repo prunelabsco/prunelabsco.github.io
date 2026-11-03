@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import { site } from "../site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = "Developer and AI tools, tested on real projects. Notes, setups and links from the Prune Labs videos." } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tagline}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <slot />
+    <footer class="wrap foot">
+      <p class="foot-line">{site.tagline}</p>
+      <p class="foot-links">
+        <a href="/">Prune Labs</a>
+        <a href={site.youtube}>YouTube</a>
+        <a href={site.instagram}>Instagram</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .foot {
+    padding-top: clamp(72px, 12vw, 160px);
+    padding-bottom: 40px;
+  }
+  .foot-line {
+    margin: 0 0 20px;
+    font-size: clamp(30px, 6vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin: 0;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .foot-links a {
+    text-decoration: none;
+  }
+  .foot-links a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+</style>
