@@ -2,6 +2,7 @@
 title: This Plugin Reads Your Codebase, Then Sets Up Claude
 summary: "claude-code-setup is one of Anthropic's official plugins. On my Laravel + Next.js app it gave 10 suggestions across 5 categories. I'm keeping two."
 published: 2026-10-20
+category: Claude Code
 ---
 
 - Plugin: [claude-code-setup](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-code-setup) in [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)

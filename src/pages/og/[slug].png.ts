@@ -125,7 +125,7 @@ export async function getStaticPaths() {
     },
     ...articles.map((a) => ({
       params: { slug: a.id },
-      props: { label: "Read", title: a.data.title },
+      props: { label: a.data.category, title: a.data.title },
     })),
   ];
 }

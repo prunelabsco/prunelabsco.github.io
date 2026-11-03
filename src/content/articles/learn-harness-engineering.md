@@ -2,6 +2,7 @@
 title: Your AI Agent Isn't the Problem. Its Harness Is.
 summary: "When your coding agent fails, it's usually not the model. Learn Harness Engineering is a course on everything around it: 14 lectures, 8 projects, and starter files."
 published: 2026-11-18
+category: Repos
 ---
 
 - Repo: [walkinglabs/learn-harness-engineering](https://github.com/walkinglabs/learn-harness-engineering)

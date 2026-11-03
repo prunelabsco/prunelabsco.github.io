@@ -2,6 +2,7 @@
 title: 3 Official Claude Skills Worth Stealing
 summary: Anthropic published the skills that power Claude itself. Here are the three worth installing, and the exact commands to add them to Claude Code.
 published: 2026-10-22
+category: Claude Code
 youtube: https://www.youtube.com/watch?v=R-hfgd0-5Bs
 instagram: https://www.instagram.com/reel/DerNW8BElgx/
 ---

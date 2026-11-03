@@ -10,6 +10,8 @@ const articles = defineCollection({
     title: z.string(),
     summary: z.string(),
     published: z.coerce.date(),
+    // one shelf per article, for the filter on /read
+    category: z.enum(["Claude Code", "Repos", "Design", "Tested"]),
     youtube: z.string().url().optional(),
     instagram: z.string().url().optional(),
   }),

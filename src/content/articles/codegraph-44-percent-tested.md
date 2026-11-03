@@ -2,6 +2,7 @@
 title: This Tool Says It Makes Claude 44% Cheaper. My Bill Went Up.
 summary: "codegraph cut tool calls from 6 to 1 on my Laravel repo. The bill still went up 19%."
 published: 2026-11-28
+category: Tested
 ---
 
 - Repo: [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph)

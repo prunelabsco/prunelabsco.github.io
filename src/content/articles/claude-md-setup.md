@@ -2,6 +2,7 @@
 title: My CLAUDE.md Setup That Fixed Bad AI Code
 summary: "My AI kept writing code that ignored my project. One file fixed it: a CLAUDE.md that doesn't hold everything, it points to everything."
 published: 2026-10-21
+category: Claude Code
 youtube: https://www.youtube.com/watch?v=Wjfb-u2-F6A
 instagram: https://www.instagram.com/reel/DesfwJ3kr5Q/
 ---

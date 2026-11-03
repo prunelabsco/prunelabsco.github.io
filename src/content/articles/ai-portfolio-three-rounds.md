@@ -2,6 +2,7 @@
 title: I Made AI Design My Portfolio Three Times. Here's What Fixed It.
 summary: "Three AI setups, the same brief, three clean pages that all looked like every other AI site. What fixed it wasn't another skill."
 published: 2026-11-04
+category: Design
 ---
 
 ## Round one: three setups, one brief

@@ -2,6 +2,7 @@
 title: I Converted My PDF to Markdown for Claude. It Got Worse.
 summary: "MarkItDown cut the input tokens by 46%. It also cut the right answers from 10 out of 10 to 4."
 published: 2026-11-14
+category: Tested
 ---
 
 - Repo: [microsoft/markitdown](https://github.com/microsoft/markitdown)

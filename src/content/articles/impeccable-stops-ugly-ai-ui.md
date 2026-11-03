@@ -2,6 +2,7 @@
 title: This Repo Stops AI From Designing Ugly UIs
 summary: "Every AI-built website looks the same. impeccable is one design skill with 24 commands. I ran it on my own portfolio: 14 out of 36, and a dark mode bug I never noticed."
 published: 2026-10-16
+category: Design
 ---
 
 - Repo: [pbakaus/impeccable](https://github.com/pbakaus/impeccable)

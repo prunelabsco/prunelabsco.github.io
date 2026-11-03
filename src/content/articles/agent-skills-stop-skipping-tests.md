@@ -2,6 +2,7 @@
 title: This Repo Stops Your AI Agent From Skipping Tests
 summary: "Your coding agent takes the shortest path, and the shortest path skips the tests. Agent Skills gives it 25 skills that walk it through the whole job."
 published: 2026-11-11
+category: Repos
 ---
 
 - Repo: [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)
