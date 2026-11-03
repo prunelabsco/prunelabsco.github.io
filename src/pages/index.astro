@@ -1,16 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Buddy from "../components/Buddy.astro";
+import Card from "../components/Card.astro";
+import { listed, mustSee } from "../articles";
 import { site } from "../site";
 
-// Articles dated after the build stay off the list (their reel hasn't aired yet); /a/<slug> still works for DM links.
-// ponytail: listed only after a rebuild on or after that date; add a scheduled deploy if that lag matters.
-const now = Date.now();
 const [featured, ...moreVideos] = site.videos;
-const articles = (await getCollection("articles"))
-  .filter((a) => a.data.published.getTime() <= now)
-  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+const articles = await listed();
+const [top, ...runnersUp] = mustSee(articles);
+const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice(0, 4);
 ---
 
 <Base>
@@ -79,18 +77,33 @@ const articles = (await getCollection("articles"))
         </div>
       </section>
 
-      <section aria-labelledby="read">
-        <h2 id="read" class="label">Read</h2>
+      <section aria-labelledby="must-see">
+        <h2 id="must-see" class="label">Must see</h2>
+        <ul class="picks">
+          <li class="wide"><Card article={top} big /></li>
+          {runnersUp.map((a) => <li><Card article={a} /></li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="latest">
+        <h2 id="latest" class="label">Latest</h2>
         <ul class="list">
           {
-            articles.map((article) => (
+            latest.map((article) => (
               <li>
                 <a class="strip paper" href={`/a/${article.id}/`}>
                   <strong>{article.data.title}</strong>
+                  <span>{article.data.category}</span>
                 </a>
               </li>
             ))
           }
+          <li>
+            <a class="strip paper all" href="/read/">
+              <strong>All {articles.length} reads</strong>
+              <span>Filter by Claude Code, Repos, Design, Tested</span>
+            </a>
+          </li>
         </ul>
       </section>
 
@@ -119,7 +132,7 @@ const articles = (await getCollection("articles"))
   // the buddy glances at whatever link you point at, and says "!" when you poke it
   const b = buddy(document.querySelector<SVGSVGElement>(".hi .buddy")!);
   b.enter(0.55);
-  document.querySelectorAll(".strip, .player").forEach((strip) => {
+  document.querySelectorAll(".strip, .player, .card").forEach((strip) => {
     strip.addEventListener("pointerenter", () => b.look(strip));
     strip.addEventListener("focus", () => b.look(strip));
     strip.addEventListener("pointerleave", () => b.rest());
@@ -299,6 +312,25 @@ const articles = (await getCollection("articles"))
     margin: 0 0 12px;
     font-size: 22px;
     letter-spacing: -0.02em;
+  }
+  .picks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .picks .wide {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 560px) {
+    .picks {
+      grid-template-columns: 1fr;
+    }
+  }
+  .all strong::after {
+    content: " →";
   }
   .list {
     display: grid;

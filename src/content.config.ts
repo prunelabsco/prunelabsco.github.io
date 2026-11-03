@@ -12,6 +12,8 @@ const articles = defineCollection({
     published: z.coerce.date(),
     // one shelf per article, for the filter on /read
     category: z.enum(["Claude Code", "Repos", "Design", "Tested"]),
+    // pinned articles lead "Must see" on the home page, ahead of the most watched
+    pinned: z.boolean().default(false),
     youtube: z.string().url().optional(),
     instagram: z.string().url().optional(),
   }),
