@@ -37,12 +37,12 @@ export function buddy(root: SVGSVGElement) {
   };
 
   return {
-    /** jump up from below, squash on landing, open the eyes */
+    /** drop in from just above its spot (never over the text below), squash on landing, open the eyes */
     enter(delay = 0.2) {
       if (still) return;
       gsap
         .timeline({ delay })
-        .from(body, { y: 420, rotation: 10, duration: 0.45, ease: "back.out(2.2)" })
+        .from(body, { y: -120, opacity: 0, duration: 0.38, ease: "power2.in" })
         .fromTo(body, { scaleY: 1, scaleX: 1 }, { scaleY: 0.88, scaleX: 1.1, duration: 0.1, yoyo: true, repeat: 1 }, "-=0.08")
         .from(lids, { scaleY: 0.06, duration: 0.2, ease: "back.out(2)" }, "-=0.05");
     },
