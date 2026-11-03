@@ -1,0 +1,162 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../site";
+
+// Numbers from the Prism run behind the reel (prism.db, read 21 Oct 2026). Do not round or update by hand.
+const run = [
+  { value: "147", label: "saved reels in" },
+  { value: "143", label: "made it through" },
+  { value: "185", label: "ideas kept" },
+  { value: "13", label: "had nothing worth keeping" },
+];
+
+const subject = "Prism waitlist";
+const body = "Hi! Send me the Prism repo when it's out.";
+const waitlistHref =
+  site.waitlistForm ?? `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+---
+
+<Base
+  title="Prism"
+  description="Prism watches your saved reels for you: frames, transcript, and Claude Code writes down the ideas worth keeping. Join the waitlist."
+>
+  <header class="wrap top">
+    <a class="back" href="/">Prune Labs</a>
+  </header>
+  <main class="wrap prism">
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">Prism watches your saved reels for you</h1>
+      <p class="lede">
+        It pulls every reel you saved, cuts it into frames, transcribes it, and hands it to Claude Code. Claude writes down
+        the ideas worth keeping, sorted into categories.
+      </p>
+      <a class="join" href={waitlistHref}>Join the waitlist</a>
+      <p class="note">
+        I'm getting it ready to release as open source. It runs on your own machine. Join and I'll send you the repo
+        when it's out.
+      </p>
+    </section>
+
+    <section class="run" aria-labelledby="my-run">
+      <h2 id="my-run">My run</h2>
+      <ul class="numbers">
+        {
+          run.map((n) => (
+            <li class="paper">
+              <strong>{n.value}</strong>
+              <span>{n.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        Ten months of saved reels, four categories. Prism proposed one category by itself (Mac tools) after three reels
+        in a row about Mac apps. I approved it.
+      </p>
+      <p>
+        It follows one rule: every note is marked <em>seen</em>, <em>guessed</em>, or <em>unknown</em>, so you know
+        what it actually saw in the reel and what it inferred.
+      </p>
+      <p><a href="https://www.instagram.com/reel/DfI0fM4h2fH/">Watch the reel</a></p>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .top {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .back {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .back::before {
+    content: "← ";
+  }
+  .prism {
+    display: grid;
+    gap: 64px;
+  }
+  @media (min-width: 900px) {
+    .prism {
+      grid-template-columns: 7fr 5fr;
+      align-items: start;
+    }
+  }
+  h1 {
+    margin: 0 0 20px;
+    font-size: clamp(44px, 7vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+  .lede {
+    max-width: 38ch;
+    margin: 0 0 32px;
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.4;
+  }
+  .join {
+    display: inline-block;
+    padding: 18px 28px;
+    background: var(--clay-ink);
+    color: #fff;
+    font-weight: 700;
+    font-size: 19px;
+    text-decoration: none;
+    transition:
+      background-color 180ms var(--ease-out),
+      transform 120ms var(--ease-out);
+  }
+  .join:hover {
+    background: var(--clay-press);
+  }
+  .join:active {
+    transform: scale(0.97);
+  }
+  .note {
+    max-width: 44ch;
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .run h2 {
+    margin: 0 0 16px;
+    font-size: 28px;
+    letter-spacing: -0.025em;
+  }
+  .numbers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+  }
+  .numbers li {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 18px;
+  }
+  .numbers strong {
+    font-size: clamp(40px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .numbers span {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .run p {
+    max-width: 52ch;
+  }
+  .run a {
+    font-weight: 600;
+    text-decoration-color: var(--clay);
+    text-underline-offset: 3px;
+  }
+</style>
