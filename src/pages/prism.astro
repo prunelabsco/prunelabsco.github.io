@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Buddy from "../components/Buddy.astro";
 import { site } from "../site";
 
 // Numbers from the Prism run behind the reel (prism.db, read 21 Oct 2026). Do not round or update by hand.
@@ -30,7 +31,10 @@ const waitlistHref =
         It pulls every reel you saved, cuts it into frames, transcribes it, and hands it to Claude Code. Claude writes down
         the ideas worth keeping, sorted into categories.
       </p>
-      <a class="join" href={waitlistHref}>Join the waitlist</a>
+      <div class="cta">
+        <a class="join" href={waitlistHref}>Join the waitlist</a>
+        <Buddy size="clamp(72px, 7vw, 96px)" gaze={-40} />
+      </div>
       <p class="note">
         I'm getting it ready to release as open source. It runs on your own machine. Join and I'll send you the repo
         when it's out.
@@ -43,7 +47,7 @@ const waitlistHref =
         {
           run.map((n) => (
             <li class="paper">
-              <strong>{n.value}</strong>
+              <strong data-count={n.value}>{n.value}</strong>
               <span>{n.label}</span>
             </li>
           ))
@@ -61,6 +65,38 @@ const waitlistHref =
     </section>
   </main>
 </Base>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { buddy } from "../buddy";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // the buddy watches the waitlist button and nods when you go for it
+  const b = buddy(document.querySelector<SVGSVGElement>(".cta .buddy")!);
+  b.enter(0.4);
+  const join = document.querySelector(".join")!;
+  join.addEventListener("pointerenter", () => b.nod());
+  join.addEventListener("focus", () => b.nod());
+
+  // the real numbers from the run count up once they're on screen
+  gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
+    document.querySelectorAll<HTMLElement>("[data-count]").forEach((el, i) => {
+      const end = Number(el.dataset.count);
+      const n = { v: 0 };
+      el.textContent = "0";
+      gsap.to(n, {
+        v: end,
+        duration: 1.2,
+        delay: i * 0.08,
+        ease: "power3.out",
+        onUpdate: () => (el.textContent = String(Math.round(n.v))),
+        scrollTrigger: { trigger: ".numbers", start: "top 85%", once: true },
+      });
+    });
+  });
+</script>
 
 <style>
   .top {
@@ -98,6 +134,11 @@ const waitlistHref =
     margin: 0 0 32px;
     font-size: clamp(19px, 2vw, 23px);
     line-height: 1.4;
+  }
+  .cta {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
   }
   .join {
     display: inline-block;
