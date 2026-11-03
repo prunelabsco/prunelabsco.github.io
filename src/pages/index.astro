@@ -30,35 +30,6 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         <a href={site.github}>GitHub</a>
       </p>
 
-      <section class="watch" aria-labelledby="watch">
-        <h2 id="watch" class="label">Watch</h2>
-        <a class="player" href={`https://www.youtube.com/watch?v=${featured.id}`} data-yt={featured.id}>
-          <span class="screen">
-            <img src={`https://i.ytimg.com/vi/${featured.id}/maxresdefault.jpg`} alt="" width="1280" height="720" />
-            <span class="play" aria-hidden="true"></span>
-          </span>
-          <strong>{featured.title}</strong>
-          <span>{featured.meta}</span>
-        </a>
-        <ul class="list">
-          {
-            moreVideos.map((v) => (
-              <li>
-                <a class="strip paper" href={`https://www.youtube.com/watch?v=${v.id}`}>
-                  <strong>{v.title}</strong>
-                  <span>{v.meta}</span>
-                </a>
-              </li>
-            ))
-          }
-          <li>
-            <a class="strip paper" href={site.youtube}>
-              <strong>All videos on YouTube</strong>
-              <span>@prunelabsco</span>
-            </a>
-          </li>
-        </ul>
-      </section>
     </header>
 
     <div class="cuts">
@@ -119,6 +90,36 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         )
       }
     </div>
+
+    <section class="watch" aria-labelledby="watch">
+      <h2 id="watch" class="label">Watch</h2>
+      <a class="player" href={`https://www.youtube.com/watch?v=${featured.id}`} data-yt={featured.id}>
+        <span class="screen">
+          <img src={`https://i.ytimg.com/vi/${featured.id}/maxresdefault.jpg`} alt="" width="1280" height="720" />
+          <span class="play" aria-hidden="true"></span>
+        </span>
+        <strong>{featured.title}</strong>
+        <span>{featured.meta}</span>
+      </a>
+      <ul class="list">
+        {
+          moreVideos.map((v) => (
+            <li>
+              <a class="strip paper" href={`https://www.youtube.com/watch?v=${v.id}`}>
+                <strong>{v.title}</strong>
+                <span>{v.meta}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a class="strip paper" href={site.youtube}>
+            <strong>All videos on YouTube</strong>
+            <span>@prunelabsco</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
 </Base>
 
@@ -177,11 +178,21 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
     gap: 48px;
     padding-top: clamp(40px, 8vw, 96px);
   }
+  /* phones: intro, reads, then Watch. Wide: Watch sits under the intro in the left column. */
   @media (min-width: 900px) {
     .hub {
       grid-template-columns: 5fr 7fr;
-      gap: 64px;
+      grid-template-rows: auto 1fr;
+      gap: 0 64px;
       align-items: start;
+    }
+    .cuts {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .watch {
+      grid-column: 1;
+      grid-row: 2;
     }
   }
   .name {
