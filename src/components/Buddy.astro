@@ -1,0 +1,48 @@
+---
+// The Prune Labs logo as a small living mascot, same drawing as the video engine
+// (_engine/src/buddy.tsx): black box, two white eyes, no clay line. Animated by src/buddy.ts.
+interface Props {
+  size?: string;
+  /** where the eyes rest, in drawing units: negative looks left, positive right */
+  gaze?: number;
+  class?: string;
+}
+const { size = "120px", gaze = -26, class: cls } = Astro.props;
+---
+
+<svg
+  class:list={["buddy", cls]}
+  data-gaze={gaze}
+  style={`width:${size}`}
+  viewBox="200 180 680 720"
+  role="img"
+  aria-label="Prune Labs buddy"
+>
+  <ellipse class="b-shadow" cx="540" cy="800" rx="250" ry="20"></ellipse>
+  <g class="b-float">
+    <g class="b-body">
+      <rect x="260" y="204" width="560" height="560" rx="122" fill="#151515"></rect>
+      <g class="b-eyes" transform={`translate(${gaze} -8)`}>
+        <rect class="b-eye" x="488" y="355" width="36" height="134" rx="12" fill="#fff"></rect>
+        <rect class="b-eye" x="617" y="355" width="36" height="134" rx="12" fill="#fff"></rect>
+      </g>
+      <text class="b-mark" x="790" y="230" transform="rotate(12 790 230)" opacity="0"></text>
+    </g>
+  </g>
+</svg>
+
+<style>
+  .buddy {
+    display: block;
+    height: auto;
+    overflow: visible;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .b-shadow {
+    fill: rgba(21, 21, 21, 0.1);
+  }
+  .b-mark {
+    font: 900 220px var(--sans);
+    fill: var(--clay);
+  }
+</style>

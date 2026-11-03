@@ -1,0 +1,56 @@
+---
+import Base from "../layouts/Base.astro";
+import Buddy from "../components/Buddy.astro";
+---
+
+<Base title="Not found" description="This page got pruned.">
+  <main class="wrap lost">
+    <Buddy size="clamp(120px, 18vw, 200px)" gaze={0} />
+    <h1>This page got pruned.</h1>
+    <p>The link is old or mistyped. Everything that's left is on the home page.</p>
+    <a class="home" href="/">Back to Prune Labs</a>
+  </main>
+</Base>
+
+<script>
+  import { buddy } from "../buddy";
+
+  // lands, shakes its head, then wonders where the page went
+  const b = buddy(document.querySelector<SVGSVGElement>(".lost .buddy")!);
+  b.enter(0.2);
+  setTimeout(() => b.shake(), 1100);
+  setTimeout(() => b.hmm(), 2200);
+</script>
+
+<style>
+  .lost {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+    padding-top: clamp(56px, 12vw, 140px);
+  }
+  h1 {
+    margin: 12px 0 0;
+    font-size: clamp(44px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+  p {
+    max-width: 40ch;
+    margin: 0;
+    font-size: clamp(19px, 2vw, 23px);
+  }
+  .home {
+    margin-top: 12px;
+    padding: 18px 28px;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 120ms var(--ease-out);
+  }
+  .home:active {
+    transform: scale(0.97);
+  }
+</style>
