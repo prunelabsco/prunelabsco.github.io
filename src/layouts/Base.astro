@@ -27,7 +27,7 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
   <body>
     <slot />
     <footer class="wrap foot">
-      <p class="foot-line">{site.tagline}</p>
+      <p class="foot-line">Prune the noise. Keep what <span>works.</span></p>
       <p class="foot-links">
         <a href="/">Prune Labs</a>
         <a href={site.youtube}>YouTube</a>
@@ -50,6 +50,9 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
     font-weight: 700;
     letter-spacing: -0.035em;
     line-height: 1;
+  }
+  .foot-line span {
+    color: var(--clay);
   }
   .foot-links {
     display: flex;
