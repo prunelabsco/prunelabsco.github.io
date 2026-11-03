@@ -4,9 +4,12 @@ import Base from "../layouts/Base.astro";
 import Buddy from "../components/Buddy.astro";
 import { site } from "../site";
 
-const articles = (await getCollection("articles")).sort(
-  (a, b) => b.data.published.getTime() - a.data.published.getTime(),
-);
+// Articles dated after the build stay off the list (their reel hasn't aired yet); /a/<slug> still works for DM links.
+// ponytail: listed only after a rebuild on or after that date; add a scheduled deploy if that lag matters.
+const now = Date.now();
+const articles = (await getCollection("articles"))
+  .filter((a) => a.data.published.getTime() <= now)
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
 ---
 
 <Base>

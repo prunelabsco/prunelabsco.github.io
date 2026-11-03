@@ -6,11 +6,17 @@ export async function getStaticPaths() {
   const articles = (await getCollection("articles")).sort(
     (a, b) => b.data.published.getTime() - a.data.published.getTime(),
   );
-  // next read = the one below it on the home list, wrapping to the top
-  return articles.map((article, i) => ({
-    params: { slug: article.id },
-    props: { article, next: articles[(i + 1) % articles.length] },
-  }));
+  // next read = the one below it on the home list, wrapping to the top.
+  // Articles dated after the build aren't on the list yet, so they point to the top of it.
+  const now = Date.now();
+  const listed = articles.filter((a) => a.data.published.getTime() <= now);
+  return articles.map((article) => {
+    const i = listed.indexOf(article);
+    return {
+      params: { slug: article.id },
+      props: { article, next: i === -1 ? listed[0] : listed[(i + 1) % listed.length] },
+    };
+  });
 }
 
 const { article, next } = Astro.props;
