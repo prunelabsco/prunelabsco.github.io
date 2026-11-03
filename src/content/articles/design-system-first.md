@@ -3,6 +3,8 @@ title: Give Your AI Agent a Design System First
 summary: "Stop asking AI for a pretty UI. When you say 'make it look good', the agent guesses. Write one DESIGN.md first."
 published: 2026-10-17
 category: Design
+youtube: https://www.youtube.com/watch?v=nvIGBgz2VSE
+instagram: https://www.instagram.com/reel/DekxWwpElfv/
 ---
 
 When you say "make it look good", the agent guesses. And it guesses the same thing everyone else gets.
