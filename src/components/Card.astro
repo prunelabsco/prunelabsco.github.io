@@ -1,0 +1,76 @@
+---
+// One article as a post: its cover (which carries the title), its shelf and the one-line summary.
+import type { Article } from "../articles";
+
+interface Props {
+  article: Article;
+  /** the first card on the home page is set larger */
+  big?: boolean;
+}
+const { article, big = false } = Astro.props;
+const { title, summary, category } = article.data;
+---
+
+<a class:list={["card", { big }]} href={`/a/${article.id}/`} data-category={category}>
+  <img src={`/og/${article.id}.png`} alt={title} width="1200" height="630" loading="lazy" decoding="async" />
+  <span class="text">
+    <span class="meta">{category}</span>
+    <span class="summary">{summary}</span>
+  </span>
+</a>
+
+<style>
+  /* a sheet cut from the mat; on hover it lifts off, like Prism */
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--paper);
+    outline: 1.5px dashed var(--paper-line);
+    outline-offset: -1.5px;
+    text-decoration: none;
+    transition:
+      translate 320ms var(--ease-out),
+      box-shadow 320ms var(--ease-out),
+      outline-color 220ms var(--ease-out);
+  }
+  .card:hover,
+  .card:focus-visible {
+    outline-color: var(--ink);
+  }
+  @media (hover: hover) {
+    .card:hover {
+      translate: -5px -5px;
+      box-shadow: 5px 5px 0 rgba(21, 21, 21, 0.14);
+    }
+  }
+  .card:active {
+    translate: 0 0;
+    box-shadow: none;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 1.5px dashed var(--paper-line);
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 18px 20px;
+  }
+  .meta {
+    color: var(--clay-ink);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .summary {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .big .summary {
+    font-size: 17px;
+  }
+</style>

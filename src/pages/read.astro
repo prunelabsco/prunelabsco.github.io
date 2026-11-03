@@ -1,0 +1,134 @@
+---
+import Base from "../layouts/Base.astro";
+import Card from "../components/Card.astro";
+import { listed } from "../articles";
+
+const articles = await listed();
+const shelves = ["Claude Code", "Repos", "Design", "Tested"];
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
+---
+
+<Base title="Read" description="Every note from the Prune Labs videos: the commands, the repos and the test numbers.">
+  <header class="wrap top">
+    <a class="back" href="/">Prune Labs</a>
+  </header>
+  <main class="wrap">
+    <h1>Read</h1>
+    <p class="lede">Every note from the videos: the commands, the repos and the test numbers. {articles.length} so far.</p>
+
+    <!-- without JS every card shows and the shelf buttons stay hidden -->
+    <div class="shelves" role="group" aria-label="Filter by shelf" hidden>
+      <button type="button" data-shelf="" aria-pressed="true">All</button>
+      {
+        shelves.map((s) => (
+          <button type="button" data-shelf={slug(s)} aria-pressed="false">
+            {s}
+          </button>
+        ))
+      }
+    </div>
+
+    <ul class="grid">
+      {
+        articles.map((a) => (
+          <li data-shelf={slug(a.data.category)}>
+            <Card article={a} />
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Base>
+
+<script>
+  // shelf filter; the choice lives in the URL hash so a filtered list can be shared (#design)
+  const bar = document.querySelector<HTMLElement>(".shelves")!;
+  const buttons = [...bar.querySelectorAll<HTMLButtonElement>("button")];
+  const items = [...document.querySelectorAll<HTMLLIElement>(".grid li")];
+  const show = (shelf: string) => {
+    if (!buttons.some((b) => b.dataset.shelf === shelf)) shelf = "";
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.shelf === shelf)));
+    items.forEach((li) => (li.hidden = shelf !== "" && li.dataset.shelf !== shelf));
+  };
+  buttons.forEach((b) =>
+    b.addEventListener("click", () => {
+      history.replaceState(null, "", b.dataset.shelf ? `#${b.dataset.shelf}` : location.pathname);
+      show(b.dataset.shelf!);
+    }),
+  );
+  bar.hidden = false;
+  show(location.hash.slice(1));
+</script>
+
+<style>
+  .top {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .back {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  .back::before {
+    content: "← ";
+  }
+  h1 {
+    margin: clamp(8px, 3vw, 32px) 0 12px;
+    font-size: clamp(56px, 7.2vw, 104px);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-weight: 750;
+  }
+  .lede {
+    max-width: 40ch;
+    margin: 0 0 32px;
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.4;
+  }
+  .shelves {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 28px;
+  }
+  .shelves[hidden] {
+    display: none;
+  }
+  .shelves button {
+    min-height: 44px;
+    padding: 0 18px;
+    border: 1.5px dashed var(--paper-line);
+    background: var(--paper);
+    color: var(--ink);
+    font: 600 16px var(--sans);
+    cursor: pointer;
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      transform 160ms var(--ease-out);
+  }
+  .shelves button:hover {
+    border-color: var(--ink);
+  }
+  .shelves button:active {
+    transform: scale(0.97);
+  }
+  .shelves button[aria-pressed="true"] {
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .grid li[hidden] {
+    display: none;
+  }
+</style>
