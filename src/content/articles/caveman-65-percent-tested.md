@@ -2,6 +2,7 @@
 title: This Repo Says It Cuts 65% of Your Tokens. I Tested It.
 summary: "Caveman makes Claude talk like a caveman. The answers got 42% shorter. The bill didn't follow."
 published: 2026-11-07
+category: Tested
 ---
 
 - Repo: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman)

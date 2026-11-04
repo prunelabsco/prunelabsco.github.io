@@ -2,6 +2,7 @@
 title: Build a Custom Claude Skill in 5 Minutes
 summary: "You're typing the same instructions to Claude every day. Turn them into a skill: one folder, one file, two required fields."
 published: 2026-10-23
+category: Claude Code
 youtube: https://www.youtube.com/watch?v=DhWfx6sFMg4
 instagram: https://www.instagram.com/reel/De0OIvdkgl4/
 ---

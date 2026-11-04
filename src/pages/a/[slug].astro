@@ -25,7 +25,7 @@ const { title, summary, published, youtube, instagram } = article.data;
 const date = published.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 ---
 
-<Base title={title} description={summary}>
+<Base title={title} description={summary} image={`/og/${article.id}.png`}>
   <div class="progress" aria-hidden="true"><span></span></div>
   <header class="wrap top">
     <div class="column"><a class="back" href="/">Prune Labs</a></div>

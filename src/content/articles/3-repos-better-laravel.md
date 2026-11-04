@@ -2,6 +2,7 @@
 title: 3 Repos That Make AI Write Better Laravel
 summary: "Your AI writes Laravel like it's 2019. Three repos fix that, in one flow: give it context, catch its mistakes, clean up its code."
 published: 2026-10-13
+category: Repos
 youtube: https://www.youtube.com/watch?v=JUDlSqQ5zKg
 instagram: https://www.instagram.com/reel/Deav3FzO8Gl/
 ---

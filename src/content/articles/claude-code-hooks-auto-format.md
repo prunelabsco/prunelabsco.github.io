@@ -2,6 +2,7 @@
 title: "Claude Code Hooks: Auto-format After Every Edit"
 summary: Telling Claude "always run the linter" doesn't stick. A hook does. Here is the one I use, what I tested, and where it stops working.
 published: 2026-10-24
+category: Claude Code
 youtube: https://www.youtube.com/watch?v=b6acJkc16jw
 instagram: https://www.instagram.com/reel/De4FRxUkn8v/
 ---

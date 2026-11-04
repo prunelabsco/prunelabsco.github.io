@@ -2,6 +2,7 @@
 title: 3 Repos That Replace Paid Dev Tools
 summary: Three common monthly bills for developers building with AI (hosting, voice, prompt testing) and the repos that can replace them.
 published: 2026-10-18
+category: Repos
 youtube: https://www.youtube.com/watch?v=tcQuCnApcEU
 instagram: https://www.instagram.com/reel/DenWKMpkmJi/
 ---

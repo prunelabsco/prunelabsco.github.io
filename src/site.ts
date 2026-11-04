@@ -10,4 +10,9 @@ export const site = {
   kofi: null as string | null,
   // Tally form for the Prism waitlist. Until it exists, the waitlist falls back to email.
   waitlistForm: null as string | null,
+  // Long-form on the home page. The first one plays inline, the rest are links. Newest first.
+  videos: [
+    { id: "yAjMdsWBL_g", title: "One Plugin Stopped Claude From Coding 7 Out of 9 Times", meta: "Latest test · 6 min" },
+    { id: "iGF4tP7DhZE", title: "I Tested 3 CLAUDE.md Setups 9 Times", meta: "Test · 7 min" },
+  ],
 };

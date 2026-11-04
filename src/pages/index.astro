@@ -1,15 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Buddy from "../components/Buddy.astro";
+import Card from "../components/Card.astro";
+import { listed, mustSee } from "../articles";
 import { site } from "../site";
 
-// Articles dated after the build stay off the list (their reel hasn't aired yet); /a/<slug> still works for DM links.
-// ponytail: listed only after a rebuild on or after that date; add a scheduled deploy if that lag matters.
-const now = Date.now();
-const articles = (await getCollection("articles"))
-  .filter((a) => a.data.published.getTime() <= now)
-  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+const [featured, ...moreVideos] = site.videos;
+const articles = await listed();
+const [top, ...runnersUp] = mustSee(articles);
+const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice(0, 4);
 ---
 
 <Base>
@@ -30,6 +29,7 @@ const articles = (await getCollection("articles"))
         <a href={site.instagram}>Instagram</a>
         <a href={site.github}>GitHub</a>
       </p>
+
     </header>
 
     <div class="cuts">
@@ -48,40 +48,31 @@ const articles = (await getCollection("articles"))
         </div>
       </section>
 
-      <section aria-labelledby="read">
-        <h2 id="read" class="label">Read</h2>
+      <section aria-labelledby="must-see">
+        <h2 id="must-see" class="label">Must see</h2>
+        <ul class="picks">
+          <li class="wide"><Card article={top} big /></li>
+          {runnersUp.map((a) => <li><Card article={a} /></li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="latest">
+        <h2 id="latest" class="label">Latest</h2>
         <ul class="list">
           {
-            articles.map((article) => (
+            latest.map((article) => (
               <li>
                 <a class="strip paper" href={`/a/${article.id}/`}>
                   <strong>{article.data.title}</strong>
+                  <span>{article.data.category}</span>
                 </a>
               </li>
             ))
           }
-        </ul>
-      </section>
-
-      <section aria-labelledby="watch">
-        <h2 id="watch" class="label">Watch</h2>
-        <ul class="list">
           <li>
-            <a class="strip paper" href="https://www.youtube.com/watch?v=yAjMdsWBL_g">
-              <strong>One Plugin Stopped Claude From Coding 7 Out of 9 Times</strong>
-              <span>Latest test · 6 min</span>
-            </a>
-          </li>
-          <li>
-            <a class="strip paper" href="https://www.youtube.com/watch?v=iGF4tP7DhZE">
-              <strong>I Tested 3 CLAUDE.md Setups 9 Times</strong>
-              <span>Test · 7 min</span>
-            </a>
-          </li>
-          <li>
-            <a class="strip paper" href={site.youtube}>
-              <strong>All videos on YouTube</strong>
-              <span>@prunelabsco</span>
+            <a class="strip paper all" href="/read/">
+              <strong>All {articles.length} reads</strong>
+              <span>Filter by Claude Code, Repos, Design, Tested</span>
             </a>
           </li>
         </ul>
@@ -99,6 +90,36 @@ const articles = (await getCollection("articles"))
         )
       }
     </div>
+
+    <section class="watch" aria-labelledby="watch">
+      <h2 id="watch" class="label">Watch</h2>
+      <a class="player" href={`https://www.youtube.com/watch?v=${featured.id}`} data-yt={featured.id}>
+        <span class="screen">
+          <img src={`https://i.ytimg.com/vi/${featured.id}/maxresdefault.jpg`} alt="" width="1280" height="720" />
+          <span class="play" aria-hidden="true"></span>
+        </span>
+        <strong>{featured.title}</strong>
+        <span>{featured.meta}</span>
+      </a>
+      <ul class="list">
+        {
+          moreVideos.map((v) => (
+            <li>
+              <a class="strip paper" href={`https://www.youtube.com/watch?v=${v.id}`}>
+                <strong>{v.title}</strong>
+                <span>{v.meta}</span>
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a class="strip paper" href={site.youtube}>
+            <strong>All videos on YouTube</strong>
+            <span>@prunelabsco</span>
+          </a>
+        </li>
+      </ul>
+    </section>
   </main>
 </Base>
 
@@ -112,13 +133,29 @@ const articles = (await getCollection("articles"))
   // the buddy glances at whatever link you point at, and says "!" when you poke it
   const b = buddy(document.querySelector<SVGSVGElement>(".hi .buddy")!);
   b.enter(0.55);
-  document.querySelectorAll(".strip").forEach((strip) => {
+  document.querySelectorAll(".strip, .player, .card").forEach((strip) => {
     strip.addEventListener("pointerenter", () => b.look(strip));
     strip.addEventListener("focus", () => b.look(strip));
     strip.addEventListener("pointerleave", () => b.rest());
     strip.addEventListener("blur", () => b.rest());
   });
   document.querySelector(".hi")!.addEventListener("click", () => b.wow());
+
+  // lite embed: only a thumbnail until clicked, then the real (no-cookie) player takes its place.
+  // Without JS, or with a modifier key, the link just opens YouTube.
+  const player = document.querySelector<HTMLAnchorElement>(".player")!;
+  player.addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    const frame = document.createElement("iframe");
+    frame.src = `https://www.youtube-nocookie.com/embed/${player.dataset.yt}?autoplay=1&rel=0`;
+    frame.title = player.querySelector("strong")!.textContent!;
+    frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    frame.allowFullscreen = true;
+    player.querySelector(".screen")!.replaceChildren(frame);
+    player.removeAttribute("href");
+    player.classList.add("on");
+  });
 
   const keep = document.querySelector(".keep")!;
   const mm = gsap.matchMedia();
@@ -141,15 +178,21 @@ const articles = (await getCollection("articles"))
     gap: 48px;
     padding-top: clamp(40px, 8vw, 96px);
   }
+  /* phones: intro, reads, then Watch. Wide: Watch sits under the intro in the left column. */
   @media (min-width: 900px) {
     .hub {
       grid-template-columns: 5fr 7fr;
-      gap: 64px;
+      grid-template-rows: auto 1fr;
+      gap: 0 64px;
       align-items: start;
     }
-    .intro {
-      position: sticky;
-      top: 64px;
+    .cuts {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .watch {
+      grid-column: 1;
+      grid-row: 2;
     }
   }
   .name {
@@ -193,6 +236,85 @@ const articles = (await getCollection("articles"))
     text-decoration-color: var(--clay);
   }
 
+  .watch {
+    margin-top: clamp(40px, 6vw, 64px);
+  }
+  .watch .list {
+    margin-top: 10px;
+  }
+  /* the latest episode, playable in place. Same paper + cut line as the strips. */
+  .player {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 10px 18px;
+    text-decoration: none;
+    background: var(--paper);
+    outline: 1.5px dashed var(--paper-line);
+    outline-offset: -1.5px;
+    transition: outline-color 220ms var(--ease-out);
+  }
+  .player:hover,
+  .player:focus-visible {
+    outline-color: var(--ink);
+  }
+  .player strong {
+    margin: 12px 10px 0;
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .player > span:last-child {
+    margin: 0 10px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .screen {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .screen img,
+  .screen iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+  /* the play button is the buddy's body: a black rounded box */
+  .play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 76px;
+    height: 54px;
+    margin: -27px 0 0 -38px;
+    border-radius: 16px;
+    background: var(--ink);
+    transition:
+      background-color 180ms var(--ease-out),
+      transform 220ms var(--ease-out);
+  }
+  .play::after {
+    content: "";
+    position: absolute;
+    left: 31px;
+    top: 16px;
+    border-left: 20px solid #fff;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+  }
+  .player:hover .play {
+    background: var(--clay-ink);
+    transform: scale(1.06);
+  }
+  .player:active .play {
+    transform: scale(0.97);
+  }
+
   .cuts {
     display: grid;
     gap: 40px;
@@ -201,6 +323,25 @@ const articles = (await getCollection("articles"))
     margin: 0 0 12px;
     font-size: 22px;
     letter-spacing: -0.02em;
+  }
+  .picks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .picks .wide {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 560px) {
+    .picks {
+      grid-template-columns: 1fr;
+    }
+  }
+  .all strong::after {
+    content: " →";
   }
   .list {
     display: grid;

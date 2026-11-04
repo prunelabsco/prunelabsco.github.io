@@ -2,6 +2,9 @@
 title: This Repo Lets AI Reverse Engineer Any App
 summary: "REA lets your agent take apart an app it doesn't have the code for, from websites down to native binaries. Every answer comes with evidence."
 published: 2026-10-28
+category: Repos
+youtube: https://www.youtube.com/watch?v=ukXmbwQKpTc
+instagram: https://www.instagram.com/reel/DfBGFcrBoHc/
 ---
 
 - Repo: [morluto/rea](https://github.com/morluto/rea)

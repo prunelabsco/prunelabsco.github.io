@@ -2,6 +2,7 @@
 title: Claude Code's /goal Wouldn't Stop Until Every Test Passed
 summary: "Same Laravel task, 3 runs with /goal and 3 without. Same score, 35% more cost, and one surprise about a test that was already broken."
 published: 2026-11-25
+category: Tested
 ---
 
 - Docs: [/goal in Claude Code](https://code.claude.com/docs/en/goal)

@@ -5,9 +5,15 @@ import { site } from "../site";
 interface Props {
   title?: string;
   description?: string;
+  /** og:image path, a PNG from /og/ */
+  image?: string;
 }
 
-const { title, description = "Developer and AI tools, tested on real projects. Notes, setups and links from the Prune Labs videos." } = Astro.props;
+const {
+  title,
+  description = "Developer and AI tools, tested on real projects. Notes, setups and links from the Prune Labs videos.",
+  image = "/og/home.png",
+} = Astro.props;
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tagline}`;
 ---
 
@@ -21,6 +27,10 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
@@ -30,6 +40,7 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
       <p class="foot-line">Prune the noise. Keep what <span>works.</span></p>
       <p class="foot-links">
         <a href="/">Prune Labs</a>
+        <a href="/read/">Read</a>
         <a href={site.youtube}>YouTube</a>
         <a href={site.instagram}>Instagram</a>
         <a href="/privacy.html">Privacy</a>
