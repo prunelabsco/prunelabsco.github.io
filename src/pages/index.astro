@@ -28,6 +28,7 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         <a href={site.youtube}>YouTube</a>
         <a href={site.instagram}>Instagram</a>
         <a href={site.github}>GitHub</a>
+        {site.support && <a class="support" href={site.support}>Support</a>}
       </p>
 
     </header>
@@ -78,17 +79,6 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         </ul>
       </section>
 
-      {
-        site.support && (
-          <section aria-labelledby="support">
-            <h2 id="support" class="label">Support</h2>
-            <a class="strip paper" href={site.support}>
-              <strong>Support on SociaBuzz</strong>
-              <span>Keeps the tests running</span>
-            </a>
-          </section>
-        )
-      }
     </div>
 
     <section class="watch" aria-labelledby="watch">
@@ -225,9 +215,13 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
   }
   .socials {
     display: flex;
-    gap: 22px;
+    flex-wrap: wrap;
+    gap: 8px 22px;
     margin: 0;
     font-weight: 600;
+  }
+  .socials .support {
+    color: var(--clay-ink);
   }
   .socials a {
     text-underline-offset: 4px;

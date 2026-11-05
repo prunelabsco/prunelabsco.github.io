@@ -43,6 +43,7 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
         <a href="/read/">Read</a>
         <a href={site.youtube}>YouTube</a>
         <a href={site.instagram}>Instagram</a>
+        {site.support && <a class="support" href={site.support}>Support</a>}
         <a href="/privacy.html">Privacy</a>
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
@@ -79,5 +80,8 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
   .foot-links a:hover {
     color: var(--ink);
     text-decoration: underline;
+  }
+  .foot-links .support {
+    color: var(--clay-ink);
   }
 </style>
