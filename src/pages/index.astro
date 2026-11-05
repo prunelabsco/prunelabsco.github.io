@@ -21,8 +21,8 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         </button>
       </div>
       <p class="lede">
-        I test developer and AI tools on real projects, then keep only what works. The notes, setups and links from
-        every video live here.
+        I test developer and AI tools on real projects, <em>then keep only what works</em>. The notes, setups and links
+        from every video <em>live here</em>.
       </p>
       <p class="socials">
         <a href={site.youtube}>YouTube</a>
@@ -212,6 +212,10 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
     margin: 0 0 24px;
     font-size: clamp(19px, 2vw, 23px);
     line-height: 1.4;
+  }
+  .lede em {
+    color: var(--clay-ink);
+    font-style: normal;
   }
   .socials {
     display: flex;
