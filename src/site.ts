@@ -9,7 +9,7 @@ export const site = {
   // Support page. Tips go through SociaBuzz, no PayPal account needed.
   support: "https://sociabuzz.com/prunelabs/tribe" as string | null,
   // Tally form for the Prism waitlist. Until it exists, the waitlist falls back to email.
-  waitlistForm: null as string | null,
+  waitlistForm: "https://tally.so/r/X5rxBz" as string | null,
   // Long-form on the home page. The first one plays inline, the rest are links. Newest first.
   videos: [
     { id: "yAjMdsWBL_g", title: "One Plugin Stopped Claude From Coding 7 Out of 9 Times", meta: "Latest test · 6 min" },
