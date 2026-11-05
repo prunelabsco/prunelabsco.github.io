@@ -277,7 +277,7 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
     background: var(--ink);
   }
   .screen img,
-  .screen iframe {
+  .screen :global(iframe) {
     display: block;
     width: 100%;
     height: 100%;
