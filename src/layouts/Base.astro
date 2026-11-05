@@ -48,6 +48,14 @@ const fullTitle = title ? `${title} · ${site.name}` : `${site.name}: ${site.tag
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
     </footer>
+    <script>
+      // Links that leave the site open in a new tab, including the ones inside articles.
+      document.querySelectorAll<HTMLAnchorElement>('a[href^="http"]').forEach((a) => {
+        if (a.host === location.host) return;
+        a.target = "_blank";
+        a.rel = "noopener";
+      });
+    </script>
   </body>
 </html>
 
