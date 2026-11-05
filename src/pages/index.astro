@@ -21,13 +21,14 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         </button>
       </div>
       <p class="lede">
-        I test developer and AI tools on real projects, then keep only what works. The notes, setups and links from
-        every video live here.
+        I test developer and AI tools on real projects, <em>then keep only what works</em>. The notes, setups and links
+        from every video <em>live here</em>.
       </p>
       <p class="socials">
         <a href={site.youtube}>YouTube</a>
         <a href={site.instagram}>Instagram</a>
         <a href={site.github}>GitHub</a>
+        {site.support && <a class="support" href={site.support}>Support</a>}
       </p>
 
     </header>
@@ -78,17 +79,6 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
         </ul>
       </section>
 
-      {
-        site.support && (
-          <section aria-labelledby="support">
-            <h2 id="support" class="label">Support</h2>
-            <a class="strip paper" href={site.support}>
-              <strong>Support on SociaBuzz</strong>
-              <span>Keeps the tests running</span>
-            </a>
-          </section>
-        )
-      }
     </div>
 
     <section class="watch" aria-labelledby="watch">
@@ -223,11 +213,19 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
     font-size: clamp(19px, 2vw, 23px);
     line-height: 1.4;
   }
+  .lede em {
+    color: var(--clay-ink);
+    font-style: normal;
+  }
   .socials {
     display: flex;
-    gap: 22px;
+    flex-wrap: wrap;
+    gap: 8px 22px;
     margin: 0;
     font-weight: 600;
+  }
+  .socials .support {
+    color: var(--clay-ink);
   }
   .socials a {
     text-underline-offset: 4px;
