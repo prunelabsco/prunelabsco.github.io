@@ -6,6 +6,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Articles dated after the last build join the lists on the next build.
+  schedule:
+    - cron: "30 0 * * *"
 
 permissions:
   contents: read

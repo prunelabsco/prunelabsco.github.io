@@ -6,8 +6,8 @@ export const site = {
   instagram: "https://www.instagram.com/prunelabsco/",
   github: "https://github.com/prunelabsco",
   email: "prunelabsco@gmail.com",
-  // Ko-fi page (via PayPal Business). Set once the account exists.
-  kofi: null as string | null,
+  // Support page. Tips go through SociaBuzz, no PayPal account needed.
+  support: "https://sociabuzz.com/prunelabs/tribe" as string | null,
   // Tally form for the Prism waitlist. Until it exists, the waitlist falls back to email.
   waitlistForm: null as string | null,
   // Long-form on the home page. The first one plays inline, the rest are links. Newest first.

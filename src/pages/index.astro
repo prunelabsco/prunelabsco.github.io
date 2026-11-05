@@ -79,11 +79,11 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
       </section>
 
       {
-        site.kofi && (
+        site.support && (
           <section aria-labelledby="support">
             <h2 id="support" class="label">Support</h2>
-            <a class="strip paper" href={site.kofi}>
-              <strong>Buy me a coffee on Ko-fi</strong>
+            <a class="strip paper" href={site.support}>
+              <strong>Support on SociaBuzz</strong>
               <span>Keeps the tests running</span>
             </a>
           </section>
@@ -277,7 +277,7 @@ const latest = articles.filter((a) => a !== top && !runnersUp.includes(a)).slice
     background: var(--ink);
   }
   .screen img,
-  .screen iframe {
+  .screen :global(iframe) {
     display: block;
     width: 100%;
     height: 100%;

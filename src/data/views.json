@@ -1,13 +1,14 @@
 {
-  "design-system-first": 2949,
-  "claude-code-hooks-auto-format": 2384,
-  "3-repos-replace-paid-dev-tools": 1945,
-  "ponytail-ai-writes-less-code": 1740,
-  "build-a-custom-claude-skill": 1345,
-  "impeccable-stops-ugly-ai-ui": 1060,
-  "rea-reverse-engineer-any-app": 810,
-  "3-repos-better-laravel": 660,
-  "claude-md-setup": 624,
-  "official-claude-skills-worth-stealing": 605,
-  "claude-code-setup-plugin": 447
+  "design-system-first": 2968,
+  "claude-code-hooks-auto-format": 2410,
+  "3-repos-replace-paid-dev-tools": 1953,
+  "ponytail-ai-writes-less-code": 1745,
+  "ai-portfolio-three-rounds": 1718,
+  "build-a-custom-claude-skill": 1360,
+  "impeccable-stops-ugly-ai-ui": 1062,
+  "rea-reverse-engineer-any-app": 855,
+  "3-repos-better-laravel": 667,
+  "claude-md-setup": 629,
+  "official-claude-skills-worth-stealing": 611,
+  "claude-code-setup-plugin": 460
 }
