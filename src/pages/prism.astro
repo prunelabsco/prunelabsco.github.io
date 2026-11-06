@@ -11,15 +11,12 @@ const run = [
   { value: "13", label: "had nothing worth keeping" },
 ];
 
-const subject = "Prism waitlist";
-const body = "Hi! Send me the Prism repo when it's out.";
-const waitlistHref =
-  site.waitlistForm ?? `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const repo = `${site.github}/prism`;
 ---
 
 <Base
   title="Prism"
-  description="Prism watches your saved reels for you: frames, transcript, and Claude Code writes down the ideas worth keeping. Join the waitlist."
+  description="Prism turns your saved Instagram reels into notes you can use. It runs on your machine with your own AI agent. Open source."
 >
   <header class="wrap top">
     <a class="back" href="/">Prune Labs</a>
@@ -28,16 +25,16 @@ const waitlistHref =
     <section class="hero" aria-labelledby="title">
       <h1 id="title">Prism watches your saved reels for you</h1>
       <p class="lede">
-        It pulls every reel you saved, cuts it into frames, transcribes it, and hands it to Claude Code. Claude writes down
-        the ideas worth keeping, sorted into categories.
+        Give it your Instagram export. It downloads each reel, cuts frames, and transcribes it on your machine. Your own
+        AI agent writes down the ideas worth keeping, sorted into categories.
       </p>
       <div class="cta">
-        <a class="join" href={waitlistHref}>Join the waitlist</a>
+        <a class="get" href={repo}>Get it on GitHub</a>
         <Buddy size="clamp(72px, 7vw, 96px)" gaze={-40} />
       </div>
       <p class="note">
-        I'm getting it ready to release as open source. It runs on your own machine. Join and I'll send you the repo
-        when it's out.
+        Open source. No Prism account, no server. Curation uses your agent's normal quota or API pricing.
+        <a href="/a/prism-saved-reels-to-notes/">How to use it</a>
       </p>
     </section>
 
@@ -73,12 +70,12 @@ const waitlistHref =
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // the buddy watches the waitlist button and nods when you go for it
+  // the buddy watches the GitHub button and nods when you go for it
   const b = buddy(document.querySelector<SVGSVGElement>(".cta .buddy")!);
   b.enter(0.4);
-  const join = document.querySelector(".join")!;
-  join.addEventListener("pointerenter", () => b.nod());
-  join.addEventListener("focus", () => b.nod());
+  const get = document.querySelector(".get")!;
+  get.addEventListener("pointerenter", () => b.nod());
+  get.addEventListener("focus", () => b.nod());
 
   // the real numbers from the run count up once they're on screen
   gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
@@ -140,7 +137,7 @@ const waitlistHref =
     align-items: flex-end;
     gap: 20px;
   }
-  .join {
+  .get {
     display: inline-block;
     padding: 18px 28px;
     background: var(--clay-ink);
@@ -152,10 +149,10 @@ const waitlistHref =
       background-color 180ms var(--ease-out),
       transform 120ms var(--ease-out);
   }
-  .join:hover {
+  .get:hover {
     background: var(--clay-press);
   }
-  .join:active {
+  .get:active {
     transform: scale(0.97);
   }
   .note {
@@ -195,6 +192,7 @@ const waitlistHref =
   .run p {
     max-width: 52ch;
   }
+  .note a,
   .run a {
     font-weight: 600;
     text-decoration-color: var(--clay);
