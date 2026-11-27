@@ -1,7 +1,7 @@
 ---
 title: This 3D Model Is Just Code
 summary: "img2threejs takes one reference image and writes a Three.js model from primitives and procedural shaders. No mesh files, no downloads."
-published: 2026-12-14
+published: 2026-12-13
 category: Repos
 ---
 
