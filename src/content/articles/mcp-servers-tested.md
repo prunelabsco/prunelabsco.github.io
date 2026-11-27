@@ -1,7 +1,7 @@
 ---
 title: 5 MCP Servers vs 15. Both Passed 20 Out of 20.
 summary: "Cutting your MCP servers to five? I ran the same 10 tasks with 5 servers, 15 servers, and 15 with tool search off. Here's what changed, and what didn't."
-published: 2026-12-12
+published: 2026-12-11
 category: Tested
 ---
 
