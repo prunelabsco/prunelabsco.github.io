@@ -1,7 +1,7 @@
 ---
 title: Your .claudeignore Does Nothing. I Tested It 13 Times.
 summary: "A fake API key in .env, listed in .claudeignore. It reached Claude in 10 of 13 runs. Here's the setup that held: a deny rule plus the sandbox, 0 of 10."
-published: 2026-12-08
+published: 2026-12-07
 category: Tested
 ---
 
