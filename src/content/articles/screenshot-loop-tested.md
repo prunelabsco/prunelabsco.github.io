@@ -1,7 +1,7 @@
 ---
 title: Claude's Screenshot Loop Cost 50% More. Did It Help?
 summary: "Three page designs, three runs each, with and without a screenshot loop. Pixel similarity went up every time. My detail checklist told a different story."
-published: 2026-12-18
+published: 2026-12-17
 category: Tested
 ---
 
