@@ -1,7 +1,7 @@
 ---
 title: Half a Million Developers Starred This List of Free APIs
 summary: "public-apis lists about 2,400 APIs, and nearly half need no key. Every entry lists auth, HTTPS and CORS, so your agent can filter before it writes a line."
-published: 2026-12-16
+published: 2026-12-15
 category: Repos
 ---
 
