@@ -1,7 +1,7 @@
 ---
 title: This Video Started as a Web Page
 summary: "HyperFrames by HeyGen turns HTML and CSS into MP4. Install the skills once and your coding agent can plan, write, preview and render the video."
-published: 2026-12-06
+published: 2026-12-05
 category: Repos
 ---
 
