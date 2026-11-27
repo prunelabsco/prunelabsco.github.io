@@ -1,7 +1,7 @@
 ---
 title: OpenAI Built a Codex Plugin for Claude Code
 summary: "The official Codex plugin for Claude Code: a read-only review, an adversarial review, a rescue command, and a review gate you should only turn on when you're watching."
-published: 2026-12-10
+published: 2026-12-09
 category: Repos
 ---
 
